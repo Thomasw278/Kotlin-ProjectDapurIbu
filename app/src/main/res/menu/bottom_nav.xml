@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Bottom Nav User -->
+<!--    <item-->
+<!--        android:id="@+id/home"-->
+<!--        android:title="Home"-->
+<!--        android:icon="@drawable/home"-->
+<!--        />-->
+
+    <!-- Bottom Nav Admin -->
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/dashboard"
+        />
+
+    <item
+        android:id="@+id/settings"
+        android:title="Catalog"
+        android:icon="@drawable/katalog"
+        />
+
+    <item
+        android:id="@+id/cstalk"
+        android:title="CS Talk"
+        android:icon="@drawable/chat"
+        />
+
+    <item
+        android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/profile"
+        />
+
+
+</menu>
