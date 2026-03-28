@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvNamaResepStat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rendang Sapi"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/tvJumlahKlik"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="850 Klik"
+            android:textColor="@color/teal_200"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/pbStatistik"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="6dp"
+        android:progress="80"
+        android:progressTint="@color/teal_200" />
+</LinearLayout>

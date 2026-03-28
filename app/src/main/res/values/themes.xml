@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.DapurIbuProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/teal_200</item>
+        <item name="colorPrimaryVariant">@color/teal_200</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.CircleImage</item>
+    </style>
+
+    <style name="ShapeAppearance.App.CircleImage" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerSize">50%</item>
+    </style>
+
+</resources>
