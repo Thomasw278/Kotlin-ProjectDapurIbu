@@ -1,19 +1,14 @@
 package com.example.dapuribuproject
 
-
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.dapuribuproject.R
-import com.example.dapuribuproject.fragment.Admin
-import com.example.dapuribuproject.fragment.Home
-import com.example.dapuribuproject.fragment.Profile
-import com.example.dapuribuproject.fragment.Katalog
-import com.example.dapuribuproject.fragment.Customer
-import com.example.dapuribuproject.fragment.Home_admin
+import com.example.dapuribuproject.fragment.Home_Fragment
+import com.example.dapuribuproject.fragment.Profile_Fragment
+import com.example.dapuribuproject.fragment.Katalog_Fragment
+import com.example.dapuribuproject.fragment.ChatFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,9 +17,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
-        //by default yang dijalankan pertama kali
+        // Default fragment saat aplikasi dibuka
         if (savedInstanceState == null) {
-            replaceFragment(Home())
+            replaceFragment(Home_Fragment())
         }
 
         val bottonNavigationView = findViewById<BottomNavigationView>(R.id.bottomnNavigationView)
@@ -32,30 +27,25 @@ class MainActivity : AppCompatActivity() {
         bottonNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
-                    replaceFragment(Home_admin())
+                    replaceFragment(Home_Fragment())
                     true
                 }
-
                 R.id.profile -> {
-                    replaceFragment(Profile())
+                    replaceFragment(Profile_Fragment())
                     true
                 }
-
                 R.id.settings -> {
-                    replaceFragment(Katalog())
+                    replaceFragment(Katalog_Fragment())
                     true
                 }
-
                 R.id.cstalk -> {
-                    replaceFragment(Admin())
+                    // Sekarang menggunakan ChatFragment yang digabung
+                    replaceFragment(ChatFragment())
                     true
                 }
-
                 else -> false
             }
-
         }
-
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -63,5 +53,4 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.FrameLayout, fragment)
             .commit()
     }
-
 }

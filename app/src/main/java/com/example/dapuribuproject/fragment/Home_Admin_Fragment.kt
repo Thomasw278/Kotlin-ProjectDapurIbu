@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ProgressBar
 
-class Home_admin : Fragment() {
+class Home_Admin_Fragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,9 +1,11 @@
+package com.example.dapuribuproject.adapterhelper
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dapuribuproject.ChatMessage
+import com.example.dapuribuproject.adapterhelper.ChatMessage
 import com.example.dapuribuproject.R
 
 class ChatAdapter(private val chatList: List<ChatMessage>) :
