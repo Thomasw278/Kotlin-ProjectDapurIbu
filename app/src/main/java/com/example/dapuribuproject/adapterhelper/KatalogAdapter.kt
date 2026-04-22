@@ -36,3 +36,4 @@ class KatalogAdapter(private val listkatalog : List<Katalog>) :
         return listkatalog.size
     }
     }
+
