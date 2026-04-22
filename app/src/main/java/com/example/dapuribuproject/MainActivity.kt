@@ -8,9 +8,14 @@ import com.example.dapuribuproject.fragment.Home_Fragment
 import com.example.dapuribuproject.fragment.Profile_Fragment
 import com.example.dapuribuproject.fragment.Katalog_Fragment
 import com.example.dapuribuproject.fragment.ChatFragment
+import com.example.dapuribuproject.fragment.Home_Admin_Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+
+    // Define User
+    val isAdmin = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -18,7 +23,9 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         // Default fragment saat aplikasi dibuka
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && isAdmin) {
+            replaceFragment(Home_Admin_Fragment())
+        } else {
             replaceFragment(Home_Fragment())
         }
 
@@ -27,7 +34,11 @@ class MainActivity : AppCompatActivity() {
         bottonNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
-                    replaceFragment(Home_Fragment())
+                    if(isAdmin) {
+                        replaceFragment(Home_Admin_Fragment())
+                    } else {
+                        replaceFragment(Home_Fragment())
+                    }
                     true
                 }
                 R.id.profile -> {
@@ -39,7 +50,6 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.cstalk -> {
-                    // Sekarang menggunakan ChatFragment yang digabung
                     replaceFragment(ChatFragment())
                     true
                 }

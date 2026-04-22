@@ -144,9 +144,13 @@
 
         <!-- Card Foto -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnUploadFoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp"
             app:strokeWidth="1dp"
@@ -155,28 +159,43 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nama File Gambar"
-                    android:textSize="12sp"
-                    android:textColor="#757575"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="4dp"/>
+                <ImageView
+                    android:id="@+id/ivPreview"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:background="#F0F0F0"
+                    android:padding="16dp"
+                    app:tint="#BDBDBD" />
 
-                <EditText
-                    android:id="@+id/etFoto"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:hint="Tanpa Extensi .jpg atau .png"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:paddingVertical="4dp"
-                    android:inputType="text" />
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Foto Makanan"
+                        android:textSize="12sp"
+                        android:textColor="#757575"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvStatusFoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pilih Dari File Handphone"
+                        android:textSize="14sp"
+                        android:textColor="@color/teal_200"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

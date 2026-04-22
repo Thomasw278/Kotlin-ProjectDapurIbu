@@ -15,7 +15,7 @@ class KatalogAdapter(private val listkatalog : List<Katalog>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNama: TextView = view.findViewById(R.id.tvFoodName)
         val tvKat: TextView = view.findViewById(R.id.tvCategory)
-        val imgFoto : ImageView = view.findViewById(R.id.ivFood)
+        val imgFoto: ImageView = view.findViewById(R.id.ivFood)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,20 +28,11 @@ class KatalogAdapter(private val listkatalog : List<Katalog>) :
         val item = listkatalog[position]
         holder.tvNama.text = item.judul_katalog
         holder.tvKat.text = item.kategori_katalog
-
-        // Ambil Foto Dari Drawable
-        val context = holder.itemView.context
         val fotoName = item.foto_katalog
-        val resource = context.resources.getIdentifier(fotoName, "drawable", context.packageName)
-        if(resource != 0) {
-            holder.imgFoto.setImageResource(resource)
-        } else {
-            holder.imgFoto.setImageResource(R.drawable.makanan)
-        }
+        holder.imgFoto.setImageURI(Uri.parse(fotoName))
     }
 
     override fun getItemCount(): Int {
         return listkatalog.size
     }
-
-}
+    }

@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.fragment.app.Fragment
 import com.example.dapuribuproject.R
 
 class ChatFragment : Fragment() {
-    private val isAdmin = false 
+    private val isAdmin = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +54,15 @@ class ChatFragment : Fragment() {
     }
 
     private fun setupCustomerUI(view: View) {
-        // Logika untuk Customer (misal inisialisasi list chat atau pesan otomatis)
-        // Di fragment_chat.xml ada RecyclerView dengan id rvChat
+        val container = view.findViewById<RelativeLayout>(R.id.rvChat)
+
+        val listAdmin = arrayOf(
+            Pair("Chef Wisnu", "Halo, ada yang bisa saya bantu?"),
+            Pair("Chef Eko Verianto", "Terima kasih atas infonya!")
+        )
+
+        for (user in listAdmin) {
+            val itemView = layoutInflater.inflate(R.layout.item_user_chat, null)
+        }
     }
 }

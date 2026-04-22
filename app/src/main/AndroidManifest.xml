@@ -27,7 +27,6 @@
             android:name=".AddKatalogActivity"
             android:label="Tambah Katalog"
             android:theme="@style/Theme.DapurIbuProject" />
-
     </application>
 
 </manifest>
