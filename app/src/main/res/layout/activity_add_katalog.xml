@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:hint="Tradisional / Modern"
+                    android:hint="Pastry | Camilan | Kue | Makanan Utama | Lainnya"
                     android:textSize="14sp"
                     android:textColor="@color/black"
                     android:paddingVertical="4dp"

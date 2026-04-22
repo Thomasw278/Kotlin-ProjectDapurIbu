@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dapuribuproject.adapterhelper.DatabaseHelper
 
@@ -35,12 +34,15 @@ class AddKatalogActivity : AppCompatActivity() {
         val btnSimpan = findViewById<Button>(R.id.btnSimpan)
         val btnFoto = findViewById<View>(R.id.btnUploadFoto)
 
+        // Ambil Judul Makanan Dari Database
         var hasil = db.getAllData()
         var nama = arrayListOf<String>()
         for (item in hasil) {
             nama.add(item.judul_katalog)
         }
 
+        // Kategori Makanan
+        val list_kategori = arrayOf("Pastry", "Camilan", "Kue", "Makanan Utama", "Lainnya")
 
         btnFoto.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
@@ -60,9 +62,13 @@ class AddKatalogActivity : AppCompatActivity() {
                 if(judul in nama){
                     Toast.makeText(this, "Judul Sudah Tersedia", Toast.LENGTH_SHORT).show()
                 } else {
-                    db.insertData(judul, kategori, deskripsi, foto)
-                    Toast.makeText(this, "Data Berhasil Disimpan", Toast.LENGTH_SHORT).show()
-                    finish()
+                    if(kategori in list_kategori){
+                        db.insertData(judul, kategori, deskripsi, foto)
+                        Toast.makeText(this, "Data Berhasil Disimpan", Toast.LENGTH_SHORT).show()
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Kategori Tidak Valid", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } else {
                 Toast.makeText(this, "Semua kolom harus diisi!", Toast.LENGTH_SHORT).show()
