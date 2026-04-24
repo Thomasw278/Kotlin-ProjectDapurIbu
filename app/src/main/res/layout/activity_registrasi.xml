@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/teal_200">
+
+    <LinearLayout
+        android:id="@+id/LinearJudulFoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="50dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="16dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Halaman REGISTRASI"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:src="@drawable/dapuribu" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinerInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@id/LinearJudulFoto"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="vertical"
+        android:padding="5dp"
+        >
+
+        <!-- Username -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#EEEEEE">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:textSize="10sp"
+                    android:textColor="#757575"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
+
+                <EditText
+                    android:id="@+id/etUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Masukkan Nama"
+                    android:textSize="11sp"
+                    android:textColor="@color/black"
+                    android:paddingVertical="4dp"
+                    android:inputType="textCapWords" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Email -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#EEEEEE">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textSize="10sp"
+                    android:textColor="#757575"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Masukkan Email"
+                    android:textSize="11sp"
+                    android:textColor="@color/black"
+                    android:paddingVertical="4dp"
+                    android:inputType="textCapWords" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- TGL Lahir -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#EEEEEE">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tanggal Lahir"
+                    android:textSize="10sp"
+                    android:textColor="#757575"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
+
+                <EditText
+                    android:id="@+id/ettglLahir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Format DD:MM:YYYY"
+                    android:textSize="11sp"
+                    android:textColor="@color/black"
+                    android:paddingVertical="4dp"
+                    android:inputType="textCapWords" />
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Role -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#EEEEEE">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Role"
+                    android:textSize="10sp"
+                    android:textColor="#757575"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
+
+                <EditText
+                    android:id="@+id/etRole"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="admin / user"
+                    android:textSize="11sp"
+                    android:textColor="@color/black"
+                    android:paddingVertical="4dp"
+                    android:inputType="textCapWords" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Password -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#EEEEEE">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:textSize="10sp"
+                    android:textColor="#757575"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Masukkan Password"
+                    android:textSize="11sp"
+                    android:textColor="@color/black"
+                    android:paddingVertical="4dp"
+                    android:inputType="textPassword" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinerTombol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/LinerInput"
+        android:layout_marginLeft="90dp"
+        android:layout_marginRight="90dp" >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:backgroundTint="@color/white"
+            android:text="Registrasi"
+            android:textAllCaps="false"
+            android:textColor="@color/teal_200"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:cornerRadius="16dp"
+            app:elevation="4dp"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="629dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/LinerTombol">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnKeLogin"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Sudah Punya Akun? Login"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

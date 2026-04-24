@@ -59,14 +59,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nama Depan"
+                    android:text="Username"
                     android:textSize="12sp"
                     android:textColor="#757575"/>
                 <TextView
-                    android:id="@+id/tvFirstName"
+                    android:id="@+id/tvUsName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thomas Aquinas"
+                    android:text=" "
                     android:textSize="16sp"
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="12dp"/>
@@ -74,15 +74,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nama Belakang"
+                    android:text="Email"
                     android:textSize="12sp"
                     android:textColor="#757575"/>
 
                 <TextView
-                    android:id="@+id/tvLastName"
+                    android:id="@+id/tvEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wisnu Adi"
+                    android:text=" "
                     android:textSize="16sp"
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="12dp"/>
@@ -98,7 +98,7 @@
                     android:id="@+id/tvtanggallahir"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="28 Januari 2007"
+                    android:text=" "
                     android:textSize="16sp"
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="12dp"/>
@@ -114,7 +114,7 @@
                     android:id="@+id/tvpassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="*******"
+                    android:text="*********"
                     android:textSize="16sp"
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="12dp"/>

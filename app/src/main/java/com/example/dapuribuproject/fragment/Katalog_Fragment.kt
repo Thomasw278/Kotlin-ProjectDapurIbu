@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dapuribuproject.R
 import com.example.dapuribuproject.AddKatalogActivity
-import com.example.dapuribuproject.adapterhelper.DatabaseHelper
-import com.example.dapuribuproject.adapterhelper.KatalogAdapter
+import com.example.dapuribuproject.Helper.DatabaseHelper
+import com.example.dapuribuproject.Adapter.KatalogAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class Katalog_Fragment : Fragment() {
@@ -24,9 +24,12 @@ class Katalog_Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_katalog, container, false)
+        return inflater.inflate(R.layout.fragment_katalog, container, false)
+    }
 
-        // 2. Inisialisasi FloatingActionButton (FAB)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val fabAdd: FloatingActionButton = view.findViewById(R.id.fabAddResep)
         val fabDel: FloatingActionButton = view.findViewById(R.id.fabAddDeleteResep)
 
@@ -34,7 +37,6 @@ class Katalog_Fragment : Fragment() {
             val intent = Intent(requireContext(), AddKatalogActivity::class.java)
             startActivity(intent)
         }
-
 
         // Logika Skenario Button
         if (isAdmin) {
@@ -46,12 +48,6 @@ class Katalog_Fragment : Fragment() {
             fabDel.visibility = View.GONE
         }
 
-        return view
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         db = DatabaseHelper(requireContext())
         rvKatalog = view.findViewById(R.id.rvKatalog)
         rvKatalog.layoutManager = LinearLayoutManager(requireContext())
@@ -59,7 +55,7 @@ class Katalog_Fragment : Fragment() {
     }
 
     fun showData() {
-        val listdata = db.getAllData()
+        val listdata = db.getAllDataKatalog()
         val adapter = KatalogAdapter(listdata)
         rvKatalog.adapter = adapter
     }

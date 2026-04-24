@@ -13,7 +13,7 @@
         android:theme="@style/Theme.DapurIbuProject">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.DapurIbuProject">
@@ -27,6 +27,19 @@
             android:name=".AddKatalogActivity"
             android:label="Tambah Katalog"
             android:theme="@style/Theme.DapurIbuProject" />
+        <activity
+            android:name=".RegistrasiActivity"
+            android:label="Login User"
+            android:theme="@style/Theme.DapurIbuProject" />
+        <activity
+            android:name=".MainActivity"
+            android:label="Home"
+            android:theme="@style/Theme.DapurIbuProject" />
+        <activity
+            android:name=".GantiPasswordActivity"
+            android:label="Ganti Password"
+            android:theme="@style/Theme.DapurIbuProject" />
+
     </application>
 
 </manifest>

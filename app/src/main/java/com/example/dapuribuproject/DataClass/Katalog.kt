@@ -1,4 +1,4 @@
-package com.example.dapuribuproject.adapterhelper
+package com.example.dapuribuproject.DataClass
 
 data class Katalog(
     val id_katalog: Int,

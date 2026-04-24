@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dapuribuproject.adapterhelper.DatabaseHelper
+import com.example.dapuribuproject.Helper.DatabaseHelper
 
 class AddKatalogActivity : AppCompatActivity() {
 
@@ -35,7 +35,7 @@ class AddKatalogActivity : AppCompatActivity() {
         val btnFoto = findViewById<View>(R.id.btnUploadFoto)
 
         // Ambil Judul Makanan Dari Database
-        var hasil = db.getAllData()
+        var hasil = db.getAllDataKatalog()
         var nama = arrayListOf<String>()
         for (item in hasil) {
             nama.add(item.judul_katalog)
@@ -63,7 +63,7 @@ class AddKatalogActivity : AppCompatActivity() {
                     Toast.makeText(this, "Judul Sudah Tersedia", Toast.LENGTH_SHORT).show()
                 } else {
                     if(kategori in list_kategori){
-                        db.insertData(judul, kategori, deskripsi, foto)
+                        db.insertData_Katalog(judul, kategori, deskripsi, foto)
                         Toast.makeText(this, "Data Berhasil Disimpan", Toast.LENGTH_SHORT).show()
                         finish()
                     } else {

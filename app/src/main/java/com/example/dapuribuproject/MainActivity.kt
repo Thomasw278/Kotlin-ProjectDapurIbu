@@ -1,6 +1,7 @@
 package com.example.dapuribuproject
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -13,14 +14,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    // Define User
-    val isAdmin = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
+
+        val isAdmin = intent.getBooleanExtra("isAdmin", false)
+        val username = intent.getStringExtra("username") ?: "User"
 
         // Default fragment saat aplikasi dibuka
         if (savedInstanceState == null && isAdmin) {

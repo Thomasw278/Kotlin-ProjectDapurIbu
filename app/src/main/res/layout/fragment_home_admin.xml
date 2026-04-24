@@ -26,12 +26,14 @@
                     android:textColor="#9E9E9E"
                     android:textSize="14sp" />
                 <TextView
+                    android:id="@+id/namaadmin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wisnu"
+                    android:text=" "
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    />
             </LinearLayout>
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="45dp"
@@ -134,7 +136,7 @@
                     android:id="@+id/tvTotalUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="100"
+                    android:text=" "
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -165,7 +167,7 @@
                     android:id="@+id/tvTotalAdmin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="100"
+                    android:text=" "
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:textStyle="bold" />
