@@ -5,13 +5,12 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.dapuribuproject.DataClass.Katalog
 import com.example.dapuribuproject.DataClass.User
-import java.util.Date
 
 class DatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, "dapuribu.db", null, 1) {
 
     override fun onCreate(db: SQLiteDatabase) {
-        val query_katalog = """
+        val queryKatalog = """
             CREATE TABLE katalog(
             id_katalog INTEGER PRIMARY KEY AUTOINCREMENT,
             judul_katalog TEXT,
@@ -21,7 +20,7 @@ class DatabaseHelper(context: Context) :
             );
         """.trimIndent()
 
-        val query_user = """
+        val queryUser = """
             CREATE TABLE user(
             id_user INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT,
@@ -32,8 +31,8 @@ class DatabaseHelper(context: Context) :
             ); 
             """.trimIndent()
 
-        db.execSQL(query_katalog)
-        db.execSQL(query_user)
+        db.execSQL(queryKatalog)
+        db.execSQL(queryUser)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -44,7 +43,8 @@ class DatabaseHelper(context: Context) :
 
     fun insertData_Katalog(judul: String, kategori: String, deskripsi: String, foto: String) {
         val db = writableDatabase
-        val query = "INSERT INTO katalog (judul_katalog, kategori_katalog, deskripsi_katalog, foto_katalog) VALUES ('$judul','$kategori','$deskripsi','$foto')"
+        val deskripsi_clear = deskripsi.replace("'", "''")
+        val query = "INSERT INTO katalog (judul_katalog, kategori_katalog, deskripsi_katalog, foto_katalog) VALUES ('$judul','$kategori','$deskripsi_clear','$foto')"
         db.execSQL(query)
     }
 

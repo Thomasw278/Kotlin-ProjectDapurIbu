@@ -31,20 +31,26 @@
 
             <TextView
                 android:id="@+id/tvFoodName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nama Masakan"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:minLines="2"
+                android:ellipsize="end" />
 
             <TextView
                 android:id="@+id/tvCategory"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Kategori: "
                 android:textColor="#757575"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:minLines="1"
+                android:ellipsize="end" />
 
             <TextView
                 android:id="@+id/tvStatus"

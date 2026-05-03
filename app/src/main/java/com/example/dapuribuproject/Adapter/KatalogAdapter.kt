@@ -1,12 +1,12 @@
 package com.example.dapuribuproject.Adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.dapuribuproject.DataClass.Katalog
 import com.example.dapuribuproject.R
 
@@ -28,12 +28,15 @@ class KatalogAdapter(private val listkatalog : List<Katalog>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = listkatalog[position]
         holder.tvNama.text = item.judul_katalog
-        holder.tvKat.text = item.kategori_katalog
-        val fotoName = item.foto_katalog
-        holder.imgFoto.setImageURI(Uri.parse(fotoName))
+        holder.tvKat.text = "Kategori : ${item.kategori_katalog}"
+        // Muat Foto Dari URL | Dengan menggunakan Glide
+        Glide.with(holder.itemView.context)
+            .load(item.foto_katalog)
+            .placeholder(R.drawable.makanan)
+            .into(holder.imgFoto)
     }
 
     override fun getItemCount(): Int {
         return listkatalog.size
     }
-    }
+}

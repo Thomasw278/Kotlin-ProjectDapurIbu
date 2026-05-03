@@ -5,61 +5,132 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.example.dapuribuproject.ApiService
+import com.example.dapuribuproject.DataClass.MealResponse
+import com.example.dapuribuproject.Helper.DatabaseHelper
 import com.example.dapuribuproject.R
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class Home_Fragment : Fragment() {
+
+    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var containerPopuler: LinearLayout
+    private lateinit var containerFavorit: LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment [cite: 1]
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inisialisasi Container dari XML
-        val containerPopuler = view.findViewById<LinearLayout>(R.id.containerPopuler)
-        val containerFavorit = view.findViewById<LinearLayout>(R.id.containerFavorit)
+        dbHelper = DatabaseHelper(requireContext())
+        containerPopuler = view.findViewById(R.id.containerPopuler)
+        containerFavorit = view.findViewById(R.id.containerFavorit)
 
-        // 1. Data Resep Populer
-        val dataPopuler = arrayOf(
-            Pair("Rendang Sapi", "500+ Dilihat"),
-            Pair("Sate Ayam Madura", "420+ Dilihat")
-        )
+        // Cek apakah database lokal kosong
+        val dataLokal = dbHelper.getAllDataKatalog()
 
-        for (item in dataPopuler) {
-            val itemView = layoutInflater.inflate(R.layout.item_resep, containerPopuler, false)
-            itemView.findViewById<TextView>(R.id.tvFoodName).text = item.first
-            itemView.findViewById<TextView>(R.id.tvCategory).text = item.second
-
-            // Atur lebar container scrooling
-            val params = itemView.layoutParams
-            params.width = 600
-            itemView.layoutParams = params
-
-            containerPopuler.addView(itemView)
+        if (dataLokal.isEmpty()) {
+            // Jika kosong | Ambil Dari API
+            LoadData()
+        } else {
+            // Jika ada | Langung Ambil DB
+            AmbilDB()
         }
+    }
 
-        // 2. Data Resep Favorit
-        val dataFavorit = arrayOf(
-            Pair("Sayur Asem Jakarta", "Favorit Saya"),
-            Pair("Pudding Coklat Lumer", "Favorit Saya"),
-            Pair("Menu MBG Bergizi", "Favorit Saya"),
-            Pair("Pudding ESP 8266", "Favorit Saya")
+    private fun LoadData() {
+        // Inisialisasi Retrofit
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://www.themealdb.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-        )
+        val apiService = retrofit.create(ApiService::class.java)
+        val daftarkategori = listOf("Beef", "Chicken", "Seafood", "Pasta", "Vegetarian", "Dutch")
 
-        for (item in dataFavorit) {
-            val itemView = layoutInflater.inflate(R.layout.item_resep, containerFavorit, false)
-            itemView.findViewById<TextView>(R.id.tvFoodName).text = item.first
-            itemView.findViewById<TextView>(R.id.tvCategory).text = item.second
+        for (kategori in daftarkategori) {
+            apiService.searchMeals(kategori).enqueue(object : Callback<MealResponse> {
+                override fun onResponse(
+                    call: Call<MealResponse>,
+                    response: Response<MealResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val mealResponse = response.body()
+                        val meals = mealResponse?.meals
 
-            containerFavorit.addView(itemView)
+                        for (makan in meals!!) {
+                            dbHelper.insertData_Katalog(
+                                makan.name ?: "",
+                                makan.category ?: "",
+                                makan.instructions ?: "",
+                                makan.thumbnail ?: ""
+                            )
+                        }
+
+                        // Update UI
+                        if (isAdded) {
+                            AmbilDB()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<MealResponse>, t: Throwable) {
+                    if (isAdded) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Gagal Mengambil Data: ${t.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            })
+        }
+    }
+
+    private fun AmbilDB() {
+        if (!isAdded) return
+
+        val listKatalog = dbHelper.getAllDataKatalog()
+        containerPopuler.removeAllViews()
+        containerFavorit.removeAllViews()
+
+        for (katalog in listKatalog) {
+            val itemView = layoutInflater.inflate(R.layout.item_resep, null, false)
+            val tvFoodName = itemView.findViewById<TextView>(R.id.tvFoodName)
+            val tvCategory = itemView.findViewById<TextView>(R.id.tvCategory)
+            val ivFood = itemView.findViewById<ImageView>(R.id.ivFood)
+            val btnDetail = itemView.findViewById<TextView>(R.id.tvStatus)
+
+            tvFoodName.text = katalog.judul_katalog
+            tvCategory.text = "Kategori: ${katalog.kategori_katalog}"
+
+            Glide.with(this@Home_Fragment)
+                .load(katalog.foto_katalog)
+                .placeholder(R.drawable.makanan)
+                .into(ivFood)
+
+            btnDetail.setOnClickListener {
+                //Kosong
+            }
+
+            val params = LinearLayout.LayoutParams(600, LinearLayout.LayoutParams.WRAP_CONTENT)
+            itemView.layoutParams = params
+            containerPopuler.addView(itemView)
+
         }
     }
 }
