@@ -7,7 +7,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dapuribuproject.Helper.DatabaseHelper
-
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var db: DatabaseHelper

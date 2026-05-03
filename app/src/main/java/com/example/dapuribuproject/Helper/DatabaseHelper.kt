@@ -33,12 +33,14 @@ class DatabaseHelper(context: Context) :
 
         db.execSQL(queryKatalog)
         db.execSQL(queryUser)
+        db.close()
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS katalog")
         db.execSQL("DROP TABLE IF EXISTS user")
         onCreate(db)
+        db.close()
     }
 
     fun insertData_Katalog(judul: String, kategori: String, deskripsi: String, foto: String) {
@@ -46,12 +48,14 @@ class DatabaseHelper(context: Context) :
         val deskripsi_clear = deskripsi.replace("'", "''")
         val query = "INSERT INTO katalog (judul_katalog, kategori_katalog, deskripsi_katalog, foto_katalog) VALUES ('$judul','$kategori','$deskripsi_clear','$foto')"
         db.execSQL(query)
+        db.close()
     }
 
     fun insertData_User(username: String, email: String, tanggal_lahir: String, role: String, password: String) {
         val db = writableDatabase
         val query = "INSERT INTO user (username, email, tanggal_lahir,role, password) VALUES ('$username','$email','$tanggal_lahir','$role','$password')"
         db.execSQL(query)
+        db.close()
     }
 
     fun getAllDataKatalog(): List<Katalog> {
@@ -157,6 +161,28 @@ class DatabaseHelper(context: Context) :
         val db = writableDatabase
         val query = "UPDATE user SET password = '$password' WHERE username = '$username'"
         db.execSQL(query)
+        db.close()
+    }
+
+    fun Search(keyword: String) : List<Katalog>{
+        val list = mutableListOf<Katalog>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM katalog WHERE judul_katalog LIKE '%$keyword%' OR kategori_katalog LIKE '%$keyword%'", null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val item = Katalog(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4)
+                )
+                list.add(item)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return list
     }
 
 }

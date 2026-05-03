@@ -38,23 +38,32 @@ class GantiPasswordActivity : AppCompatActivity() {
         }
 
         btnSimpan.setOnClickListener {
-            if(isiUsername in list_user){
-                if(etpassword.text.toString() == etKonfirmasiPassword.text.toString()){
-                    if(etpassword.text.toString().length >= 8 && etKonfirmasiPassword.text.toString().length >= 8){
-                        db.UpdatePassword(isiUsername, etpassword.text.toString())
-                        Toast.makeText(this, "Password Berhasil Diubah", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, LoginActivity::class.java)
-                        intent.putExtra("username", isiUsername)
-                        intent.putExtra("password", etpassword.text.toString())
-                        startActivity(intent)
+            val getpw = db.getPassword(etUsername.text.toString())
+            if(isiUsername.isNotEmpty() || (etpassword.text.toString().isNotEmpty()) || (etKonfirmasiPassword.text.toString().isNotEmpty())) {
+                if (etUsername.text.toString() in list_user) {
+                    if (etpassword.text.toString() != getpw) {
+                        if (etpassword.text.toString() == etKonfirmasiPassword.text.toString()) {
+                            if (etpassword.text.toString().length >= 8 && etKonfirmasiPassword.text.toString().length >= 8) {
+                                db.UpdatePassword(etUsername.text.toString(), etpassword.text.toString())
+                                Toast.makeText(this, "Password Berhasil Diubah", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this, LoginActivity::class.java)
+                                intent.putExtra("username", isiUsername)
+                                intent.putExtra("password", etpassword.text.toString())
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(this, "Password Minimal 8 Karakter", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(this, "Password dengan Konfirmasi Tidak Sama", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
-                        Toast.makeText(this, "Password Minimal 8 Karakter", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Password Baru dan Lama Sama", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(this, "Password dengan Konfirmasi Tidak Sama", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Username Tidak Ditemukan", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "Username Tidak Ditemukan", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Kolom Tidak Boleh Kosong", Toast.LENGTH_SHORT).show()
             }
         }
 

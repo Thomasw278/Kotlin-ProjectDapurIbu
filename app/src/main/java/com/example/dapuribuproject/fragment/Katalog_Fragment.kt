@@ -2,11 +2,13 @@ package com.example.dapuribuproject.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dapuribuproject.R
@@ -54,6 +56,30 @@ class Katalog_Fragment : Fragment() {
         db = DatabaseHelper(requireContext())
         rvKatalog = view.findViewById(R.id.rvKatalog)
         rvKatalog.layoutManager = LinearLayoutManager(requireContext())
+
+        // SearchBar
+        val searchbar = view.findViewById<EditText>(R.id.etSearch)
+        searchbar.addTextChangedListener(object : android.text.TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                // Kosong
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Kosong
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query = s.toString()
+                if(query.isEmpty()){
+                    showData()
+                } else {
+                    val listdata = db.Search(s.toString())
+                    val adapter = KatalogAdapter(listdata)
+                    rvKatalog.adapter = adapter
+                }
+            }
+        })
+
         showData()
     }
 
