@@ -9,3 +9,5 @@ interface ApiService {
     @GET("api/json/v1/1/search.php")
     fun searchMeals(@Query("s") query: String): Call<MealResponse>
 }
+
+

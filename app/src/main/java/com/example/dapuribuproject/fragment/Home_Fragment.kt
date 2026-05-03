@@ -2,7 +2,6 @@ package com.example.dapuribuproject.fragment
 
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.example.dapuribuproject.Adapter.KatalogAdapter
 import com.example.dapuribuproject.ApiService
 import com.example.dapuribuproject.DataClass.MealResponse
 import com.example.dapuribuproject.Helper.DatabaseHelper

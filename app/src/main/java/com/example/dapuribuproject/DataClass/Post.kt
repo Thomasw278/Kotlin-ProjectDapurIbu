@@ -13,3 +13,5 @@ data class Post(
     @SerializedName("strInstructions") val instructions: String?,
     @SerializedName("strMealThumb") val thumbnail: String?
 )
+
+
