@@ -163,13 +163,43 @@
             app:cornerRadius="16dp"
             app:elevation="4dp" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linearButtons">
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnKeRegistrasi"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Belum punya akun? Regis"
+            android:text="Registrasi"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text=" | "
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnKeGantiPassword"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Ganti Password"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="14sp" />

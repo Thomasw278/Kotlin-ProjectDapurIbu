@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnSimpan)
         val btnRegis = findViewById<Button>(R.id.btnKeRegistrasi)
+        val btnGantiPassword = findViewById<Button>(R.id.btnKeGantiPassword)
 
         var list_user = db.getAllDataUser()
 
@@ -67,6 +68,11 @@ class LoginActivity : AppCompatActivity() {
 
         btnRegis.setOnClickListener {
             val intent = Intent(this, RegistrasiActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnGantiPassword.setOnClickListener {
+            val intent = Intent(this, GantiPasswordActivity::class.java)
             startActivity(intent)
         }
     }

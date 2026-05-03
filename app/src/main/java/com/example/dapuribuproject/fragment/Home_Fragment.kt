@@ -1,6 +1,7 @@
 package com.example.dapuribuproject.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class Home_Fragment : Fragment() {
 
@@ -36,6 +39,19 @@ class Home_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Ambil Jam
+        val jamTextView = view.findViewById<TextView>(R.id.JamTerkini)
+        val jamFormatter = DateTimeFormatter.ofPattern("HH:mm")
+        val current = LocalDateTime.now().format(jamFormatter)
+        jamTextView.text = "Jam Saat ini : ${current}"
+
+        // Ambil Username
+        val userTextView = view.findViewById<TextView>(R.id.NamaUser)
+        val username = activity?.intent?.getStringExtra("username") ?: "User"
+        userTextView.text = username.replaceFirstChar { it.uppercase() }
+
+
+        // Inisialisasi DB Helper | Container Populer & Favorit
         dbHelper = DatabaseHelper(requireContext())
         containerPopuler = view.findViewById(R.id.containerPopuler)
         containerFavorit = view.findViewById(R.id.containerFavorit)
@@ -107,6 +123,7 @@ class Home_Fragment : Fragment() {
         val listKatalog = dbHelper.getAllDataKatalog()
         containerPopuler.removeAllViews()
         containerFavorit.removeAllViews()
+        val marginEndPx = (16 * resources.displayMetrics.density).toInt()
 
         for (katalog in listKatalog) {
             val itemView = layoutInflater.inflate(R.layout.item_resep, null, false)
@@ -127,7 +144,8 @@ class Home_Fragment : Fragment() {
                 //Kosong
             }
 
-            val params = LinearLayout.LayoutParams(600, LinearLayout.LayoutParams.WRAP_CONTENT)
+            val params = LinearLayout.LayoutParams(800, LinearLayout.LayoutParams.WRAP_CONTENT)
+            params.setMargins(0, 0, marginEndPx, 0)
             itemView.layoutParams = params
             containerPopuler.addView(itemView)
 

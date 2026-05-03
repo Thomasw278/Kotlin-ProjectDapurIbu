@@ -37,7 +37,7 @@ class Home_Admin_Fragment : Fragment() {
         // Ambil Nama
         val nama_admin = view.findViewById<TextView>(R.id.namaadmin)
         val username = activity?.intent?.getStringExtra("username") ?: "User"
-        nama_admin.text = username
+        nama_admin.text = username.replaceFirstChar { it.uppercase() }
 
         // DB Helper || Ambil Size DB untuk Total Resep
         db = DatabaseHelper(requireContext())

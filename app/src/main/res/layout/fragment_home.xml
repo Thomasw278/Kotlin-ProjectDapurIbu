@@ -21,16 +21,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/JamTerkini"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Selamat Pagi,"
                     android:textColor="#9E9E9E"
                     android:textSize="14sp" />
                 <TextView
+                    android:id="@+id/NamaUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Wisnu Adi"
                     android:textColor="@color/black"
+                    style="allcaps"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
