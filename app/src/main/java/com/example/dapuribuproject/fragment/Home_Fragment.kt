@@ -2,6 +2,7 @@ package com.example.dapuribuproject.fragment
 
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,21 +13,26 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.example.dapuribuproject.ApiService
+import com.example.dapuribuproject.Api.ApiService
 import com.example.dapuribuproject.DataClass.MealResponse
 import com.example.dapuribuproject.Helper.DatabaseHelper
 import com.example.dapuribuproject.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class Home_Fragment : Fragment() {
 
-    private lateinit var dbHelper: DatabaseHelper
+    @Inject
+    lateinit var apiService: ApiService
+    @Inject
+    lateinit var dbHelper: DatabaseHelper
+
     private lateinit var containerPopuler: LinearLayout
     private lateinit var containerFavorit: LinearLayout
 
@@ -53,7 +59,6 @@ class Home_Fragment : Fragment() {
 
 
         // Inisialisasi DB Helper | Container Populer & Favorit
-        dbHelper = DatabaseHelper(requireContext())
         containerPopuler = view.findViewById(R.id.containerPopuler)
         containerFavorit = view.findViewById(R.id.containerFavorit)
 
@@ -71,14 +76,8 @@ class Home_Fragment : Fragment() {
         // SearchBar
         val searchbar = view.findViewById<EditText>(R.id.etSearch)
         searchbar.addTextChangedListener(object : android.text.TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                // Kosong
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Kosong
-            }
-
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val query = s.toString()
                 if(query.isEmpty()){
@@ -119,13 +118,7 @@ class Home_Fragment : Fragment() {
     }
 
     private fun LoadData() {
-        // Inisialisasi Retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://www.themealdb.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
-        val apiService = retrofit.create(ApiService::class.java)
         val daftarkategori = listOf("Beef", "Chicken", "Seafood", "Pasta", "Vegetarian", "Dutch")
 
         for (kategori in daftarkategori) {
@@ -155,11 +148,13 @@ class Home_Fragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<MealResponse>, t: Throwable) {
+                    Log.e("API_ERROR", "Error: ${t.message}", t)
+
                     if (isAdded) {
                         Toast.makeText(
                             requireContext(),
-                            "Gagal Mengambil Data: ${t.message}",
-                            Toast.LENGTH_SHORT
+                            "Gagal: ${t.message}",
+                            Toast.LENGTH_LONG
                         ).show()
                     }
                 }

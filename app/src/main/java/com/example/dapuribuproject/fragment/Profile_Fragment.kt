@@ -8,11 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import com.example.dapuribuproject.GantiPasswordActivity
+import com.example.dapuribuproject.loginregis.GantiPasswordActivity
 import com.example.dapuribuproject.Helper.DatabaseHelper
-import com.example.dapuribuproject.LoginActivity
+import com.example.dapuribuproject.loginregis.LoginActivity
 import com.example.dapuribuproject.R
-import com.example.dapuribuproject.RegistrasiActivity
+import com.example.dapuribuproject.loginregis.RegistrasiActivity
 
 class Profile_Fragment : Fragment() {
 

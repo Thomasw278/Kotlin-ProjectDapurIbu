@@ -1,4 +1,4 @@
-package com.example.dapuribuproject
+package com.example.dapuribuproject.Api
 
 import com.example.dapuribuproject.DataClass.MealResponse
 import retrofit2.Call
@@ -9,5 +9,3 @@ interface ApiService {
     @GET("api/json/v1/1/search.php")
     fun searchMeals(@Query("s") query: String): Call<MealResponse>
 }
-
-

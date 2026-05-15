@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -26,13 +29,23 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
     buildFeatures {
         compose = true
     }
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {
@@ -60,5 +73,12 @@ dependencies {
     
     // Glide for Image Loading
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    "kapt"("com.github.bumptech.glide:compiler:4.16.0")
+
+    // Hilt
+    implementation(libs.hilt.android)
+    "kapt"(libs.hilt.compiler)
+
+    // Fix Kotlin metadata version
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.9.0")
 }

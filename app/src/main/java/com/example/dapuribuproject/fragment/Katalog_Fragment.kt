@@ -60,13 +60,8 @@ class Katalog_Fragment : Fragment() {
         // SearchBar
         val searchbar = view.findViewById<EditText>(R.id.etSearch)
         searchbar.addTextChangedListener(object : android.text.TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                // Kosong
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Kosong
-            }
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val query = s.toString()
@@ -79,7 +74,6 @@ class Katalog_Fragment : Fragment() {
                 }
             }
         })
-
         showData()
     }
 

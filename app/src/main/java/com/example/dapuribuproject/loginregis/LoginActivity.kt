@@ -1,4 +1,4 @@
-package com.example.dapuribuproject
+package com.example.dapuribuproject.loginregis
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dapuribuproject.loginregis.GantiPasswordActivity
 import com.example.dapuribuproject.Helper.DatabaseHelper
+import com.example.dapuribuproject.MainActivity
+import com.example.dapuribuproject.R
+import com.example.dapuribuproject.loginregis.RegistrasiActivity
+
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var db: DatabaseHelper

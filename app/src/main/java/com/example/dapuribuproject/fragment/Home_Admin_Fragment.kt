@@ -1,7 +1,6 @@
 package com.example.dapuribuproject.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +11,19 @@ import android.widget.TextView
 import com.example.dapuribuproject.Helper.DatabaseHelper
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.example.dapuribuproject.ApiService
+import com.example.dapuribuproject.Api.ApiService
 import com.example.dapuribuproject.DataClass.MealResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class Home_Admin_Fragment : Fragment() {
+
+    @Inject
+    lateinit var apiService: ApiService
     private lateinit var db: DatabaseHelper
 
     override fun onCreateView(
@@ -51,13 +54,6 @@ class Home_Admin_Fragment : Fragment() {
         }
     }
         private fun LoadData() {
-            // Inisialisasi Retrofit
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://www.themealdb.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-            val apiService = retrofit.create(ApiService::class.java)
             val daftarkategori = listOf("Beef", "Chicken", "Seafood", "Pasta", "Vegetarian", "Dutch")
 
             for (kategori in daftarkategori) {

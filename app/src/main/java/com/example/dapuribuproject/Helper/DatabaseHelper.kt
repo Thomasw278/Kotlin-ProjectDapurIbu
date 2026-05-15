@@ -33,14 +33,12 @@ class DatabaseHelper(context: Context) :
 
         db.execSQL(queryKatalog)
         db.execSQL(queryUser)
-        db.close()
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS katalog")
         db.execSQL("DROP TABLE IF EXISTS user")
         onCreate(db)
-        db.close()
     }
 
     fun insertData_Katalog(judul: String, kategori: String, deskripsi: String, foto: String) {

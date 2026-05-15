@@ -11,7 +11,9 @@ import com.example.dapuribuproject.fragment.Katalog_Fragment
 import com.example.dapuribuproject.fragment.ChatFragment
 import com.example.dapuribuproject.fragment.Home_Admin_Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
