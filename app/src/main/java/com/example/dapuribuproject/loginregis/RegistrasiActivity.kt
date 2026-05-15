@@ -8,18 +8,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dapuribuproject.Helper.DatabaseHelper
 import com.example.dapuribuproject.R
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class RegistrasiActivity : AppCompatActivity() {
 
-    private lateinit var db: DatabaseHelper
+    @Inject
+    lateinit var db: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrasi)
 
-        db = DatabaseHelper(this)
-
-        // Ambil Text View | Button
+        // Ambil Text View | Button dari Regis xml
         val etUsername = findViewById<EditText>(R.id.etUsername)
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val ettglLahir = findViewById<EditText>(R.id.ettglLahir)
@@ -28,7 +30,7 @@ class RegistrasiActivity : AppCompatActivity() {
         val btnRegistrasi = findViewById<Button>(R.id.btnSimpan)
         val btnKeRegistrasi = findViewById<Button>(R.id.btnKeLogin)
 
-        // Ambil Field DB
+        // Ambil Field DB roles, daftar user dan daftar email
         var list_role = arrayOf("admin", "user")
         var daftar_user = arrayListOf<String>()
         var daftar_email = arrayListOf<String>()
@@ -44,6 +46,7 @@ class RegistrasiActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Button Ke Registrasi | Validasi Registrasi
         btnRegistrasi.setOnClickListener {
             val username = etUsername.text.toString()
             val email = etEmail.text.toString()

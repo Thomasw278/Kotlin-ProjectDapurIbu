@@ -13,10 +13,14 @@ import com.example.dapuribuproject.Helper.DatabaseHelper
 import com.example.dapuribuproject.loginregis.LoginActivity
 import com.example.dapuribuproject.R
 import com.example.dapuribuproject.loginregis.RegistrasiActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class Profile_Fragment : Fragment() {
 
-    private lateinit var db: DatabaseHelper
+    @Inject
+    lateinit var db: DatabaseHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +36,6 @@ class Profile_Fragment : Fragment() {
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
         val btnChangePassword = view.findViewById<Button>(R.id.btnChangePassword)
 
-
         //Ambil Field Username | Role | Email | Tanggal Lahir | Password
         val tvRole = view.findViewById<TextView>(R.id.tvRole)
         val tvUsername = view.findViewById<TextView>(R.id.tvUsName)
@@ -45,12 +48,10 @@ class Profile_Fragment : Fragment() {
         tvUsername.text = username
 
         //Ambil Role | Email | Tempat Tanggal Lahir | Password
-        db = DatabaseHelper(requireContext())
         val role = db.getRoles(username)
         val email = db.getEmail(username)
         val tanggallahir = db.getTanggalLahir(username)
         val password = db.getPassword(username)
-
 
         //Isi TV
         tvRole.text = role

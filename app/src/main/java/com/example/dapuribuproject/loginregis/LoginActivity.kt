@@ -6,29 +6,30 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dapuribuproject.loginregis.GantiPasswordActivity
 import com.example.dapuribuproject.Helper.DatabaseHelper
 import com.example.dapuribuproject.MainActivity
 import com.example.dapuribuproject.R
-import com.example.dapuribuproject.loginregis.RegistrasiActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var db: DatabaseHelper
+    @Inject
+    lateinit var db: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        db = DatabaseHelper(this)
-
-        //Ambil Atriubut Edit Text | Button
+        //Ambil Atriubut Edit Text | Button dari Login xml
         val etUsername = findViewById<EditText>(R.id.etUsername)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnSimpan)
         val btnRegis = findViewById<Button>(R.id.btnKeRegistrasi)
         val btnGantiPassword = findViewById<Button>(R.id.btnKeGantiPassword)
 
+        // Ambil List User DB
         var list_user = db.getAllDataUser()
 
         //Ambil Username
@@ -42,11 +43,13 @@ class LoginActivity : AppCompatActivity() {
         val isiPassword = intent.getStringExtra("password") ?: ""
         var isAdmin = false
 
+        // Cek Username || Password jika ada (Skenario dari Registrasi)
         if (isiUsername.isNotEmpty() && isiPassword.isNotEmpty()) {
             etUsername.setText(isiUsername)
             etPassword.setText(isiPassword)
         }
 
+        // Login User | Validasi Username dan Password
         btnLogin.setOnClickListener {
             val etUsername = etUsername.text.toString()
             val etPassword = etPassword.text.toString()
@@ -70,11 +73,13 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        // Button ke Registrasi
         btnRegis.setOnClickListener {
             val intent = Intent(this, RegistrasiActivity::class.java)
             startActivity(intent)
         }
 
+        // Button ke Ganti Password
         btnGantiPassword.setOnClickListener {
             val intent = Intent(this, GantiPasswordActivity::class.java)
             startActivity(intent)

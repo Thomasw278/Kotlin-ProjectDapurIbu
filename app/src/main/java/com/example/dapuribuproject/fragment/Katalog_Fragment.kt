@@ -3,7 +3,6 @@ package com.example.dapuribuproject.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +15,15 @@ import com.example.dapuribuproject.AddKatalogActivity
 import com.example.dapuribuproject.Helper.DatabaseHelper
 import com.example.dapuribuproject.Adapter.KatalogAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class Katalog_Fragment : Fragment() {
 
     lateinit var rvKatalog : RecyclerView
+
+    @Inject
     lateinit var db : DatabaseHelper
 
     override fun onCreateView(
@@ -53,7 +57,6 @@ class Katalog_Fragment : Fragment() {
             fabDel.visibility = View.GONE
         }
 
-        db = DatabaseHelper(requireContext())
         rvKatalog = view.findViewById(R.id.rvKatalog)
         rvKatalog.layoutManager = LinearLayoutManager(requireContext())
 

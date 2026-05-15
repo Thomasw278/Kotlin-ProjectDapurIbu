@@ -8,35 +8,39 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dapuribuproject.Helper.DatabaseHelper
 import com.example.dapuribuproject.R
+import dagger.hilt.android.AndroidEntryPoint
+import jakarta.inject.Inject
 
+@AndroidEntryPoint
 class GantiPasswordActivity : AppCompatActivity() {
 
-    private lateinit var db: DatabaseHelper
+    // Inject DB Helper
+    @Inject
+    lateinit var db: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gantipw)
 
-        //Ambil EditView
+        //Ambil Layout - Layout Ganti Password xml
         val etUsername = findViewById<EditText>(R.id.etUsername)
         val etpassword = findViewById<EditText>(R.id.etPassword)
         val etKonfirmasiPassword = findViewById<EditText>(R.id.etKonfirmasiPassword)
         val btnSimpan = findViewById<Button>(R.id.btnSimpan)
         val btnLogin = findViewById<Button>(R.id.btnKeLogin)
 
-        //Cek Username
+        //Cek Username dari Main Activity (Skenario Ganti PW dari user)
         val isiUsername = intent.getStringExtra("username") ?: ""
         etUsername.setText(isiUsername)
 
-        // Connect Database
-        db = DatabaseHelper(this)
-
+        //Ambil Data DB
         val database = db.getAllDataUser()
         var list_user = arrayListOf<String>()
         for(item in database){
             list_user.add(item.username)
         }
 
+        // Cek Username dkk ketika button diclick
         btnSimpan.setOnClickListener {
             val getpw = db.getPassword(etUsername.text.toString())
             if(isiUsername.isNotEmpty() || (etpassword.text.toString().isNotEmpty()) || (etKonfirmasiPassword.text.toString().isNotEmpty())) {
@@ -67,7 +71,7 @@ class GantiPasswordActivity : AppCompatActivity() {
             }
         }
 
-
+        // Balik ke Login
         btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
