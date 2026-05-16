@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class Home_Admin_Fragment : Fragment() {
-
     @Inject
     lateinit var apiService: ApiService
     private lateinit var db: DatabaseHelper
@@ -55,7 +54,6 @@ class Home_Admin_Fragment : Fragment() {
     }
         private fun LoadData() {
             val daftarkategori = listOf("Beef", "Chicken", "Seafood", "Pasta", "Vegetarian", "Dutch")
-
             for (kategori in daftarkategori) {
                 apiService.searchMeals(kategori).enqueue(object : Callback<MealResponse> {
                     override fun onResponse(
@@ -65,7 +63,6 @@ class Home_Admin_Fragment : Fragment() {
                         if (response.isSuccessful) {
                             val mealResponse = response.body()
                             val meals = mealResponse?.meals
-
                             for (makan in meals!!) {
                                 db.insertData_Katalog(makan.name ?: "", makan.category ?: "", makan.instructions ?: "", makan.thumbnail ?: ""
                                 )
@@ -126,7 +123,6 @@ class Home_Admin_Fragment : Fragment() {
             // Set Text User | Admin
             total_user?.text = hitung_user.toString()
             total_admin?.text = hitung_admin.toString()
-
 
             // Jumlah Per Kategori
             val kategori_jumlah = kategori.groupingBy { it.kategori_katalog }.eachCount()

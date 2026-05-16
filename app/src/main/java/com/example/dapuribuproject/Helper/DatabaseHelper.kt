@@ -31,13 +31,24 @@ class DatabaseHelper(context: Context) :
             ); 
             """.trimIndent()
 
+        val queryFavorit = """
+            CREATE TABLE favorit(
+            id_favorit INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT,
+            id_katalog INTEGER,
+            FOREIGN KEY(id_katalog) REFERENCES katalog(id_katalog)
+            );
+        """.trimIndent()
+
         db.execSQL(queryKatalog)
         db.execSQL(queryUser)
+        db.execSQL(queryFavorit)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS katalog")
         db.execSQL("DROP TABLE IF EXISTS user")
+        db.execSQL("DROP TABLE IF EXISTS favorit")
         onCreate(db)
     }
 
@@ -66,6 +77,54 @@ class DatabaseHelper(context: Context) :
         val list = mutableListOf<Katalog>()
         val db = readableDatabase
         val cursor = db.rawQuery("SELECT * FROM katalog", null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val item = Katalog(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4)
+                )
+                list.add(item)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return list
+    }
+
+    // Favorite Methods
+    fun addFavorit(username: String, idKatalog: Int) {
+        val db = writableDatabase
+        val query = "INSERT INTO favorit (username, id_katalog) VALUES ('$username', $idKatalog)"
+        db.execSQL(query)
+        db.close()
+    }
+
+    fun removeFavorit(username: String, idKatalog: Int) {
+        val db = writableDatabase
+        db.execSQL("DELETE FROM favorit WHERE username = '$username' AND id_katalog = $idKatalog")
+        db.close()
+    }
+
+    fun isFavorit(username: String, idKatalog: Int): Boolean {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM favorit WHERE username = '$username' AND id_katalog = $idKatalog", null)
+        val exists = cursor.count > 0
+        cursor.close()
+        return exists
+    }
+
+    fun getFavoritByUser(username: String): List<Katalog> {
+        val list = mutableListOf<Katalog>()
+        val db = readableDatabase
+        val query = """
+            SELECT k.* FROM katalog k
+            JOIN favorit f ON k.id_katalog = f.id_katalog
+            WHERE f.username = '$username'
+        """.trimIndent()
+        val cursor = db.rawQuery(query, null)
 
         if (cursor.moveToFirst()) {
             do {
@@ -116,7 +175,7 @@ class DatabaseHelper(context: Context) :
             } while (cursor.moveToNext())
         }
         cursor.close()
-        return list[0]
+        return if (list.isNotEmpty()) list[0] else ""
     }
 
     fun getEmail(username: String): String {
@@ -130,7 +189,7 @@ class DatabaseHelper(context: Context) :
             } while (cursor.moveToNext())
         }
         cursor.close()
-        return list[0]
+        return if (list.isNotEmpty()) list[0] else ""
     }
 
     fun getTanggalLahir(username: String): String {
@@ -144,7 +203,7 @@ class DatabaseHelper(context: Context) :
             } while (cursor.moveToNext())
         }
         cursor.close()
-        return list[0]
+        return if (list.isNotEmpty()) list[0] else ""
     }
 
     fun getPassword(username: String): String {
@@ -158,7 +217,7 @@ class DatabaseHelper(context: Context) :
             } while (cursor.moveToNext())
         }
         cursor.close()
-        return list[0]
+        return if (list.isNotEmpty()) list[0] else ""
     }
 
     fun UpdatePassword(username: String, password: String) {

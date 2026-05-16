@@ -23,6 +23,7 @@ object NetworkModule {
         .build()
 
     @Provides
+    @Singleton
     fun provideDatabaseHelper(
         @ApplicationContext context: Context
     ): DatabaseHelper {

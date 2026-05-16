@@ -38,7 +38,8 @@ class Katalog_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var isAdmin = activity?.intent?.getBooleanExtra("isAdmin", false)
+        val isAdmin = activity?.intent?.getBooleanExtra("isAdmin", false) ?: false
+        val username = activity?.intent?.getStringExtra("username") ?: "User"
 
         val fabAdd: FloatingActionButton = view.findViewById(R.id.fabAddResep)
         val fabDel: FloatingActionButton = view.findViewById(R.id.fabAddDeleteResep)
@@ -51,7 +52,7 @@ class Katalog_Fragment : Fragment() {
         fabDel.setOnClickListener {
             selectedKatalogId?.let { id ->
                 db.deleteData_Katalog(id)
-                selectedKatalogId = null //Reset Pilihan
+                selectedKatalogId = null
                 showData()
                 Toast.makeText(requireContext(), "Menu berhasil dihapus", Toast.LENGTH_SHORT).show()
             } ?: run {
@@ -59,8 +60,7 @@ class Katalog_Fragment : Fragment() {
             }
         }
 
-        // Logika Skenario Button
-        if (isAdmin == true) {
+        if (isAdmin) {
             fabAdd.visibility = View.VISIBLE
             fabDel.visibility = View.VISIBLE
         } else {
@@ -71,7 +71,6 @@ class Katalog_Fragment : Fragment() {
         rvKatalog = view.findViewById(R.id.rvKatalog)
         rvKatalog.layoutManager = LinearLayoutManager(requireContext())
 
-        // SearchBar
         val searchbar = view.findViewById<EditText>(R.id.etSearch)
         searchbar.addTextChangedListener(object : android.text.TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -83,7 +82,7 @@ class Katalog_Fragment : Fragment() {
                     showData()
                 } else {
                     val listdata = db.Search(s.toString())
-                    val adapter = KatalogAdapter(listdata) { selectedItem ->
+                    val adapter = KatalogAdapter(listdata, isAdmin, username) { selectedItem ->
                         selectedKatalogId = selectedItem.id_katalog
                     }
                     rvKatalog.adapter = adapter
@@ -94,8 +93,10 @@ class Katalog_Fragment : Fragment() {
     }
 
     fun showData() {
+        val isAdmin = activity?.intent?.getBooleanExtra("isAdmin", false) ?: false
+        val username = activity?.intent?.getStringExtra("username") ?: "User"
         val listdata = db.getAllDataKatalog()
-        val adapter = KatalogAdapter(listdata) { selectedItem ->
+        val adapter = KatalogAdapter(listdata, isAdmin, username) { selectedItem ->
             selectedKatalogId = selectedItem.id_katalog
         }
         rvKatalog.adapter = adapter

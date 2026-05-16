@@ -40,6 +40,10 @@
             android:name=".loginregis.GantiPasswordActivity"
             android:label="Ganti Password"
             android:theme="@style/Theme.DapurIbuProject" />
+        <activity
+            android:name=".DetailKatalogActivity"
+            android:label="Detail Resep"
+            android:theme="@style/Theme.DapurIbuProject" />
 
     </application>
 

@@ -1,5 +1,6 @@
 package com.example.dapuribuproject.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -11,10 +12,11 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.dapuribuproject.Api.ApiService
 import com.example.dapuribuproject.DataClass.MealResponse
+import com.example.dapuribuproject.DataClass.Katalog
+import com.example.dapuribuproject.DetailKatalogActivity
 import com.example.dapuribuproject.Helper.DatabaseHelper
 import com.example.dapuribuproject.R
 import retrofit2.Call
@@ -44,7 +46,7 @@ class Home_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Ambil Jam | Set Up Jam
+        // Ambil Jam
         val jamTextView = view.findViewById<TextView>(R.id.JamTerkini)
         val jamFormatter = DateTimeFormatter.ofPattern("HH:mm")
         val current = LocalDateTime.now().format(jamFormatter)
@@ -55,18 +57,15 @@ class Home_Fragment : Fragment() {
         val username = activity?.intent?.getStringExtra("username") ?: "User"
         userTextView.text = username.replaceFirstChar { it.uppercase() }
 
-        // Inisialisasi Container Populer & Favorit
+        // Inisialisasi Container Favorit | Populer
         containerPopuler = view.findViewById(R.id.containerPopuler)
         containerFavorit = view.findViewById(R.id.containerFavorit)
 
-        // Cek apakah database lokal kosong
+        // Ambil Data Katalog
         val dataLokal = dbHelper.getAllDataKatalog()
-
         if (dataLokal.isEmpty()) {
-            // Jika kosong | Ambil Dari API
             LoadData()
         } else {
-            // Jika ada | Langung Ambil DB
             AmbilDB()
         }
 
@@ -81,66 +80,28 @@ class Home_Fragment : Fragment() {
                     AmbilDB()
                 } else {
                     val listdata = dbHelper.Search(s.toString())
-                    containerPopuler.removeAllViews()
-                    containerFavorit.removeAllViews()
-                    val marginEndPx = (16 * resources.displayMetrics.density).toInt()
-
-                    for (katalog in listdata) {
-                        val itemView = layoutInflater.inflate(R.layout.item_resep, null, false)
-                        val tvFoodName = itemView.findViewById<TextView>(R.id.tvFoodName)
-                        val tvCategory = itemView.findViewById<TextView>(R.id.tvCategory)
-                        val ivFood = itemView.findViewById<ImageView>(R.id.ivFood)
-                        val btnDetail = itemView.findViewById<TextView>(R.id.tvStatus)
-
-                        tvFoodName.text = katalog.judul_katalog
-                        tvCategory.text = "Kategori: ${katalog.kategori_katalog}"
-
-                        Glide.with(this@Home_Fragment)
-                            .load(katalog.foto_katalog)
-                            .placeholder(R.drawable.makanan)
-                            .into(ivFood)
-
-                        val params = LinearLayout.LayoutParams(800, LinearLayout.LayoutParams.WRAP_CONTENT)
-                        params.setMargins(0, 0, marginEndPx, 0)
-                        itemView.layoutParams = params
-                        containerPopuler.addView(itemView)
-
-                    }
+                    updateContainers(listdata, listOf())
                 }
             }
         })
-        AmbilDB()
-
     }
 
     private fun LoadData() {
         val daftarkategori = listOf("Beef", "Chicken", "Seafood", "Pasta", "Vegetarian", "Dutch")
-
         for (kategori in daftarkategori) {
             apiService.searchMeals(kategori).enqueue(object : Callback<MealResponse> {
-                override fun onResponse(
-                    call: Call<MealResponse>,
-                    response: Response<MealResponse>
-                ) {
+                override fun onResponse(call: Call<MealResponse>, response: Response<MealResponse>) {
                     if (response.isSuccessful) {
-                        val mealResponse = response.body()
-                        val meals = mealResponse?.meals
-                        for (makan in meals!!) {
+                        val meals = response.body()?.meals
+                        meals?.forEach { makan ->
                             dbHelper.insertData_Katalog(makan.name ?: "", makan.category ?: "", makan.instructions ?: "", makan.thumbnail ?: ""
                             )
                         }
-                        // Update UI
-                        if (isAdded) {
-                            AmbilDB()
-                        }
+                        if (isAdded) AmbilDB()
                     }
                 }
                 override fun onFailure(call: Call<MealResponse>, t: Throwable) {
                     Log.e("API_ERROR", "Error: ${t.message}", t)
-                    if (isAdded) {
-                        Toast.makeText(requireContext(), "Gagal: ${t.message}", Toast.LENGTH_LONG
-                        ).show()
-                    }
                 }
             })
         }
@@ -148,32 +109,72 @@ class Home_Fragment : Fragment() {
 
     private fun AmbilDB() {
         if (!isAdded) return
-
+        val username = activity?.intent?.getStringExtra("username") ?: "User"
+        
         val listKatalog = dbHelper.getAllDataKatalog()
+        val listFavorit = dbHelper.getFavoritByUser(username)
+        
+        updateContainers(listKatalog, listFavorit)
+    }
+
+    private fun updateContainers(populer: List<Katalog>, favorit: List<Katalog>) {
         containerPopuler.removeAllViews()
         containerFavorit.removeAllViews()
         val marginEndPx = (16 * resources.displayMetrics.density).toInt()
+        val marginBottomPx = (12 * resources.displayMetrics.density).toInt()
+        val username = activity?.intent?.getStringExtra("username") ?: "User"
+        val isAdmin = activity?.intent?.getBooleanExtra("isAdmin", false) ?: false
 
-        for (katalog in listKatalog) {
-            val itemView = layoutInflater.inflate(R.layout.item_resep, null, false)
-            val tvFoodName = itemView.findViewById<TextView>(R.id.tvFoodName)
-            val tvCategory = itemView.findViewById<TextView>(R.id.tvCategory)
-            val ivFood = itemView.findViewById<ImageView>(R.id.ivFood)
-            val btnDetail = itemView.findViewById<TextView>(R.id.tvStatus)
-
-            tvFoodName.text = katalog.judul_katalog
-            tvCategory.text = "Kategori: ${katalog.kategori_katalog}"
-
-            Glide.with(this@Home_Fragment)
-                .load(katalog.foto_katalog)
-                .placeholder(R.drawable.makanan)
-                .into(ivFood)
-
+        // Isi Populer (Horizontal)
+        populer.forEach { katalog ->
+            val itemView = createItemView(katalog, username, isAdmin)
             val params = LinearLayout.LayoutParams(800, LinearLayout.LayoutParams.WRAP_CONTENT)
             params.setMargins(0, 0, marginEndPx, 0)
             itemView.layoutParams = params
             containerPopuler.addView(itemView)
-
         }
+
+        // Isi Favorit (Vertical)
+        favorit.forEach { katalog ->
+            val itemView = createItemView(katalog, username, isAdmin)
+            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            params.setMargins(0, 0, 0, marginBottomPx)
+            itemView.layoutParams = params
+            containerFavorit.addView(itemView)
+        }
+    }
+
+    private fun createItemView(katalog: Katalog, username: String, isAdmin: Boolean): View {
+        val itemView = layoutInflater.inflate(R.layout.item_resep, null, false)
+        val tvFoodName = itemView.findViewById<TextView>(R.id.tvFoodName)
+        val tvCategory = itemView.findViewById<TextView>(R.id.tvCategory)
+        val ivFood = itemView.findViewById<ImageView>(R.id.ivFood)
+        val btnDetail = itemView.findViewById<TextView>(R.id.tvStatus)
+
+        tvFoodName.text = katalog.judul_katalog
+        tvCategory.text = "Kategori: ${katalog.kategori_katalog}"
+
+        Glide.with(this)
+            .load(katalog.foto_katalog)
+            .placeholder(R.drawable.makanan)
+            .into(ivFood)
+
+        btnDetail.setOnClickListener {
+            val intent = Intent(requireContext(), DetailKatalogActivity::class.java)
+            intent.putExtra("id_katalog", katalog.id_katalog)
+            intent.putExtra("judul", katalog.judul_katalog)
+            intent.putExtra("kategori", katalog.kategori_katalog)
+            intent.putExtra("deskripsi", katalog.deskripsi_katalog)
+            intent.putExtra("foto", katalog.foto_katalog)
+            intent.putExtra("username", username)
+            intent.putExtra("isAdmin", isAdmin)
+            startActivity(intent)
+        }
+        return itemView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AmbilDB() // Refresh favorit saat kembali ke Home
     }
 }
