@@ -11,10 +11,14 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dapuribuproject.Helper.DatabaseHelper
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AddKatalogActivity : AppCompatActivity() {
 
-    private lateinit var db: DatabaseHelper
+    @Inject
+    lateinit var db: DatabaseHelper
     private lateinit var imgFoto: ImageView
     private var fotoPath: String = ""
     val Image_PICK = 100 //Kode khusus untuk buka galeri
@@ -23,11 +27,12 @@ class AddKatalogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_katalog)
 
-        db = DatabaseHelper(this)
+        // Image Upload
         imgFoto = findViewById(R.id.ivPreview)
         imgFoto.setPadding(0, 0, 0, 0)
         imgFoto.imageTintList = null
 
+        // Ambil Atribut Edit Text | Button dari Add Katalog xml
         val etJudul = findViewById<EditText>(R.id.etJudul)
         val etKategori = findViewById<EditText>(R.id.etKategori)
         val etDeskripsi = findViewById<EditText>(R.id.etDeskripsi)
@@ -44,6 +49,7 @@ class AddKatalogActivity : AppCompatActivity() {
         // Kategori Makanan
         val list_kategori = arrayOf("Pastry", "Camilan", "Kue", "Makanan Utama", "Lainnya")
 
+        // Button Foto
         btnFoto.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
@@ -52,6 +58,7 @@ class AddKatalogActivity : AppCompatActivity() {
             startActivityForResult(intent, Image_PICK)
         }
 
+        // Button Simpan Katalog
         btnSimpan.setOnClickListener {
             val judul = etJudul.text.toString()
             val kategori = etKategori.text.toString()
@@ -76,6 +83,7 @@ class AddKatalogActivity : AppCompatActivity() {
         }
     }
 
+    // Set Path untuk perijinan foto
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Image_PICK && resultCode == Activity.RESULT_OK) {

@@ -27,12 +27,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class Home_Fragment : Fragment() {
-
     @Inject
     lateinit var apiService: ApiService
     @Inject
     lateinit var dbHelper: DatabaseHelper
-
     private lateinit var containerPopuler: LinearLayout
     private lateinit var containerFavorit: LinearLayout
 
@@ -46,19 +44,18 @@ class Home_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Ambil Jam
+        // Ambil Jam | Set Up Jam
         val jamTextView = view.findViewById<TextView>(R.id.JamTerkini)
         val jamFormatter = DateTimeFormatter.ofPattern("HH:mm")
         val current = LocalDateTime.now().format(jamFormatter)
         jamTextView.text = "Jam Saat ini : ${current}"
 
-        // Ambil Username
+        // Ambil Username | Set Up Username
         val userTextView = view.findViewById<TextView>(R.id.NamaUser)
         val username = activity?.intent?.getStringExtra("username") ?: "User"
         userTextView.text = username.replaceFirstChar { it.uppercase() }
 
-
-        // Inisialisasi DB Helper | Container Populer & Favorit
+        // Inisialisasi Container Populer & Favorit
         containerPopuler = view.findViewById(R.id.containerPopuler)
         containerFavorit = view.findViewById(R.id.containerFavorit)
 
@@ -112,13 +109,11 @@ class Home_Fragment : Fragment() {
                 }
             }
         })
-
         AmbilDB()
 
     }
 
     private fun LoadData() {
-
         val daftarkategori = listOf("Beef", "Chicken", "Seafood", "Pasta", "Vegetarian", "Dutch")
 
         for (kategori in daftarkategori) {
@@ -130,31 +125,20 @@ class Home_Fragment : Fragment() {
                     if (response.isSuccessful) {
                         val mealResponse = response.body()
                         val meals = mealResponse?.meals
-
                         for (makan in meals!!) {
-                            dbHelper.insertData_Katalog(
-                                makan.name ?: "",
-                                makan.category ?: "",
-                                makan.instructions ?: "",
-                                makan.thumbnail ?: ""
+                            dbHelper.insertData_Katalog(makan.name ?: "", makan.category ?: "", makan.instructions ?: "", makan.thumbnail ?: ""
                             )
                         }
-
                         // Update UI
                         if (isAdded) {
                             AmbilDB()
                         }
                     }
                 }
-
                 override fun onFailure(call: Call<MealResponse>, t: Throwable) {
                     Log.e("API_ERROR", "Error: ${t.message}", t)
-
                     if (isAdded) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Gagal: ${t.message}",
-                            Toast.LENGTH_LONG
+                        Toast.makeText(requireContext(), "Gagal: ${t.message}", Toast.LENGTH_LONG
                         ).show()
                     }
                 }

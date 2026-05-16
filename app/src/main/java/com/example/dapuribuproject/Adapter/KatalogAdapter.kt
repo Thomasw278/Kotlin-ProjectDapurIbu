@@ -1,5 +1,6 @@
 package com.example.dapuribuproject.Adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,12 @@ import com.bumptech.glide.Glide
 import com.example.dapuribuproject.DataClass.Katalog
 import com.example.dapuribuproject.R
 
-class KatalogAdapter(private val listkatalog : List<Katalog>) :
-    RecyclerView.Adapter<KatalogAdapter.ViewHolder>() {
+class KatalogAdapter(
+    private val listkatalog: List<Katalog>,
+    private val onItemClick: (Katalog) -> Unit
+) : RecyclerView.Adapter<KatalogAdapter.ViewHolder>() {
+
+    private var selectedPosition = RecyclerView.NO_POSITION
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNama: TextView = view.findViewById(R.id.tvFoodName)
@@ -29,11 +34,26 @@ class KatalogAdapter(private val listkatalog : List<Katalog>) :
         val item = listkatalog[position]
         holder.tvNama.text = item.judul_katalog
         holder.tvKat.text = "Kategori : ${item.kategori_katalog}"
-        // Muat Foto Dari URL | Dengan menggunakan Glide
+        
         Glide.with(holder.itemView.context)
             .load(item.foto_katalog)
             .placeholder(R.drawable.makanan)
             .into(holder.imgFoto)
+
+        // Highlight selected item
+        if (selectedPosition == position) {
+            holder.itemView.setBackgroundColor(Color.LTGRAY)
+        } else {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT)
+        }
+
+        holder.itemView.setOnClickListener {
+            val previousPosition = selectedPosition
+            selectedPosition = holder.adapterPosition
+            notifyItemChanged(previousPosition)
+            notifyItemChanged(selectedPosition)
+            onItemClick(item)
+        }
     }
 
     override fun getItemCount(): Int {

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dapuribuproject.R
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class Katalog_Fragment : Fragment() {
 
     lateinit var rvKatalog : RecyclerView
+    private var selectedKatalogId: Int? = null
 
     @Inject
     lateinit var db : DatabaseHelper
@@ -38,7 +40,6 @@ class Katalog_Fragment : Fragment() {
 
         var isAdmin = activity?.intent?.getBooleanExtra("isAdmin", false)
 
-
         val fabAdd: FloatingActionButton = view.findViewById(R.id.fabAddResep)
         val fabDel: FloatingActionButton = view.findViewById(R.id.fabAddDeleteResep)
 
@@ -47,11 +48,21 @@ class Katalog_Fragment : Fragment() {
             startActivity(intent)
         }
 
+        fabDel.setOnClickListener {
+            selectedKatalogId?.let { id ->
+                db.deleteData_Katalog(id)
+                selectedKatalogId = null //Reset Pilihan
+                showData()
+                Toast.makeText(requireContext(), "Menu berhasil dihapus", Toast.LENGTH_SHORT).show()
+            } ?: run {
+                Toast.makeText(requireContext(), "Pilih menu yang ingin dihapus terlebih dahulu", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         // Logika Skenario Button
         if (isAdmin == true) {
             fabAdd.visibility = View.VISIBLE
             fabDel.visibility = View.VISIBLE
-
         } else {
             fabAdd.visibility = View.GONE
             fabDel.visibility = View.GONE
@@ -72,7 +83,9 @@ class Katalog_Fragment : Fragment() {
                     showData()
                 } else {
                     val listdata = db.Search(s.toString())
-                    val adapter = KatalogAdapter(listdata)
+                    val adapter = KatalogAdapter(listdata) { selectedItem ->
+                        selectedKatalogId = selectedItem.id_katalog
+                    }
                     rvKatalog.adapter = adapter
                 }
             }
@@ -82,7 +95,9 @@ class Katalog_Fragment : Fragment() {
 
     fun showData() {
         val listdata = db.getAllDataKatalog()
-        val adapter = KatalogAdapter(listdata)
+        val adapter = KatalogAdapter(listdata) { selectedItem ->
+            selectedKatalogId = selectedItem.id_katalog
+        }
         rvKatalog.adapter = adapter
     }
 
@@ -90,5 +105,4 @@ class Katalog_Fragment : Fragment() {
         super.onResume()
         showData()
     }
-
 }

@@ -49,6 +49,12 @@ class DatabaseHelper(context: Context) :
         db.close()
     }
 
+    fun deleteData_Katalog(id: Int) {
+        val db = writableDatabase
+        db.execSQL("DELETE FROM katalog WHERE id_katalog = $id")
+        db.close()
+    }
+
     fun insertData_User(username: String, email: String, tanggal_lahir: String, role: String, password: String) {
         val db = writableDatabase
         val query = "INSERT INTO user (username, email, tanggal_lahir,role, password) VALUES ('$username','$email','$tanggal_lahir','$role','$password')"

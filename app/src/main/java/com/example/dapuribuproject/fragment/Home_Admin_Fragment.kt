@@ -37,7 +37,7 @@ class Home_Admin_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Ambil Nama
+        // Ambil Nama / Username dari Login Activity
         val nama_admin = view.findViewById<TextView>(R.id.namaadmin)
         val username = activity?.intent?.getStringExtra("username") ?: "User"
         nama_admin.text = username.replaceFirstChar { it.uppercase() }
@@ -67,11 +67,7 @@ class Home_Admin_Fragment : Fragment() {
                             val meals = mealResponse?.meals
 
                             for (makan in meals!!) {
-                                db.insertData_Katalog(
-                                    makan.name ?: "",
-                                    makan.category ?: "",
-                                    makan.instructions ?: "",
-                                    makan.thumbnail ?: ""
+                                db.insertData_Katalog(makan.name ?: "", makan.category ?: "", makan.instructions ?: "", makan.thumbnail ?: ""
                                 )
                             }
                             // Update UI
@@ -80,7 +76,6 @@ class Home_Admin_Fragment : Fragment() {
                             }
                         }
                     }
-
                     override fun onFailure(call: Call<MealResponse>, t: Throwable) {
                         if (isAdded) {
                             Toast.makeText(requireContext(),"Gagal Mengambil Data: ${t.message}", Toast.LENGTH_SHORT).show()
@@ -127,6 +122,8 @@ class Home_Admin_Fragment : Fragment() {
                     hitung_user += 1
                 }
             }
+
+            // Set Text User | Admin
             total_user?.text = hitung_user.toString()
             total_admin?.text = hitung_admin.toString()
 

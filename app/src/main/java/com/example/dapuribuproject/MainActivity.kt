@@ -1,7 +1,6 @@
 package com.example.dapuribuproject
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -22,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
+        // Ambil Intent dari Login Activity
         val isAdmin = intent.getBooleanExtra("isAdmin", false)
         val username = intent.getStringExtra("username") ?: "User"
 
@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(Home_Fragment())
         }
 
+        // Switch antar fragment
         val bottonNavigationView = findViewById<BottomNavigationView>(R.id.bottomnNavigationView)
-
         bottonNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
