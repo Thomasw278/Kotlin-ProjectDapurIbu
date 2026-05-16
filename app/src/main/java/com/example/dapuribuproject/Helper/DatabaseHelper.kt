@@ -1,8 +1,10 @@
 package com.example.dapuribuproject.Helper
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.dapuribuproject.DataClass.ChatMessage
 import com.example.dapuribuproject.DataClass.Katalog
 import com.example.dapuribuproject.DataClass.User
 
@@ -40,15 +42,27 @@ class DatabaseHelper(context: Context) :
             );
         """.trimIndent()
 
+        val queryPesan = """
+            CREATE TABLE pesan(
+            id_pesan INTEGER PRIMARY KEY AUTOINCREMENT,
+            sender TEXT,
+            receiver TEXT,
+            isi_pesan TEXT,
+            waktu TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """.trimIndent()
+
         db.execSQL(queryKatalog)
         db.execSQL(queryUser)
         db.execSQL(queryFavorit)
+        db.execSQL(queryPesan)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS katalog")
         db.execSQL("DROP TABLE IF EXISTS user")
         db.execSQL("DROP TABLE IF EXISTS favorit")
+        db.execSQL("DROP TABLE IF EXISTS pesan")
         onCreate(db)
     }
 
@@ -136,6 +150,70 @@ class DatabaseHelper(context: Context) :
                     cursor.getString(4)
                 )
                 list.add(item)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return list
+    }
+
+    // Chat Methods
+    fun insertPesan(sender: String, receiver: String, message: String) {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put("sender", sender)
+            put("receiver", receiver)
+            put("isi_pesan", message)
+        }
+        db.insert("pesan", null, values)
+        db.close()
+    }
+
+    fun getChatMessages(user1: String, user2: String): List<ChatMessage> {
+        val list = mutableListOf<ChatMessage>()
+        val db = readableDatabase
+        val query = "SELECT * FROM pesan WHERE (sender = ? AND receiver = ?) OR (sender = ? AND receiver = ?) ORDER BY waktu ASC"
+        val cursor = db.rawQuery(query, arrayOf(user1, user2, user2, user1))
+
+        if (cursor.moveToFirst()) {
+            do {
+                val sender = cursor.getString(1)
+                val item = ChatMessage(
+                    id = cursor.getInt(0),
+                    sender = sender,
+                    receiver = cursor.getString(2),
+                    message = cursor.getString(3),
+                    timestamp = cursor.getString(4),
+                    isSentByMe = sender == user1
+                )
+                list.add(item)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return list
+    }
+
+    fun getChatUsersForAdmin(): List<Pair<String, String>> {
+        val list = mutableListOf<Pair<String, String>>()
+        val db = readableDatabase
+        val query = """
+            SELECT other_party, isi_pesan 
+            FROM (
+                SELECT receiver as other_party, waktu, isi_pesan FROM pesan WHERE sender = 'admin'
+                UNION ALL
+                SELECT sender as other_party, waktu, isi_pesan FROM pesan WHERE receiver = 'admin'
+            )
+            GROUP BY other_party
+            HAVING waktu = MAX(waktu)
+            ORDER BY waktu DESC
+        """.trimIndent()
+        
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val user = cursor.getString(0)
+                if (user != "admin") {
+                    list.add(Pair(user, cursor.getString(1)))
+                }
             } while (cursor.moveToNext())
         }
         cursor.close()
