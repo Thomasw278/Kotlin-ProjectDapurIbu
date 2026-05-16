@@ -56,6 +56,9 @@ class DatabaseHelper(context: Context) :
         db.execSQL(queryUser)
         db.execSQL(queryFavorit)
         db.execSQL(queryPesan)
+
+        // Index Pesan
+        db.execSQL("CREATE INDEX idx_pesan_participants ON pesan(sender, receiver)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -206,7 +209,7 @@ class DatabaseHelper(context: Context) :
             HAVING waktu = MAX(waktu)
             ORDER BY waktu DESC
         """.trimIndent()
-        
+
         val cursor = db.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
