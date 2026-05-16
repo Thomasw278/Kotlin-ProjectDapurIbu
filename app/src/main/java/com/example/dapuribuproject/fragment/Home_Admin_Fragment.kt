@@ -23,7 +23,9 @@ import javax.inject.Inject
 class Home_Admin_Fragment : Fragment() {
     @Inject
     lateinit var apiService: ApiService
-    private lateinit var db: DatabaseHelper
+
+    @Inject
+    lateinit var db: DatabaseHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +43,7 @@ class Home_Admin_Fragment : Fragment() {
         val username = activity?.intent?.getStringExtra("username") ?: "User"
         nama_admin.text = username.replaceFirstChar { it.uppercase() }
 
-        // DB Helper || Ambil Size DB untuk Total Resep
-        db = DatabaseHelper(requireContext())
+        // Ambil Size DB untuk Total Resep
         val dataLokal = db.getAllDataKatalog()
         if (dataLokal.isEmpty()) {
             // Jika kosong | Ambil Dari API

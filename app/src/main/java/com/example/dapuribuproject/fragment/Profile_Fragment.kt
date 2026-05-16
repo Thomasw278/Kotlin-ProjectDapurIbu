@@ -33,6 +33,7 @@ class Profile_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Button Logout | Ganti Password
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
         val btnChangePassword = view.findViewById<Button>(R.id.btnChangePassword)
 

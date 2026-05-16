@@ -16,12 +16,16 @@ import com.example.dapuribuproject.Adapter.ChatAdapter
 import com.example.dapuribuproject.DataClass.ChatMessage
 import com.example.dapuribuproject.Helper.DatabaseHelper
 import com.example.dapuribuproject.R
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ChatFragment : Fragment() {
-    private lateinit var dbHelper: DatabaseHelper
+    @Inject
+    lateinit var dbHelper: DatabaseHelper
     private var isAdmin = false
     private var currentUsername = ""
     private var chatWithUser = "admin"
@@ -36,7 +40,6 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dbHelper = DatabaseHelper(requireContext())
         currentUsername = activity?.intent?.getStringExtra("username") ?: "User"
         isAdmin = activity?.intent?.getBooleanExtra("isAdmin", false) ?: false
 
