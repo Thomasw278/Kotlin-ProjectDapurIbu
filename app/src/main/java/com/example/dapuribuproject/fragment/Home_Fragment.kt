@@ -26,6 +26,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlin.collections.emptyList
 
 @AndroidEntryPoint
 class Home_Fragment : Fragment() {
@@ -93,6 +94,9 @@ class Home_Fragment : Fragment() {
                 override fun onResponse(call: Call<MealResponse>, response: Response<MealResponse>) {
                     if (response.isSuccessful) {
                         val meals = response.body()?.meals
+                        val listData = meals?.take(20) ?: emptyList()
+                        // Tambahkan log untuk debugging data
+                        Log.d("DEBUG_API", "Jumlah data yang berhasil diambil:${listData.size}")
                         meals?.forEach { makan ->
                             dbHelper.insertData_Katalog(makan.name ?: "", makan.category ?: "", makan.instructions ?: "", makan.thumbnail ?: ""
                             )
@@ -113,6 +117,10 @@ class Home_Fragment : Fragment() {
         
         val listKatalog = dbHelper.getAllDataKatalog()
         val listFavorit = dbHelper.getFavoritByUser(username)
+
+        val listData = listKatalog?.take(20) ?: emptyList()
+        // Tambahkan log untuk debugging data
+        Log.d("DEBUG_API", "Jumlah data yang berhasil diambil:${listData.size}")
         
         updateContainers(listKatalog, listFavorit)
     }
