@@ -21,26 +21,26 @@ DapurIbuProject
 │   ├── src
 │   │   ├── main
 │   │   │   ├── java/com/example/dapuribuproject/
-│   │   │   │   ├── Adapter/                   # Adapter untuk RecyclerView
+│   │   │   │   ├── adapter/                   # Adapter untuk RecyclerView
 │   │   │   │   │   ├── ChatAdapter.kt
 │   │   │   │   │   └── KatalogAdapter.kt
-│   │   │   │   ├── Api/                       # Konfigurasi Network & API
+│   │   │   │   ├── api/                       # Konfigurasi Network & API
 │   │   │   │   │   ├── ApiService.kt
 │   │   │   │   │   └── NetworkModule.kt
-│   │   │   │   ├── DataClass/                 # Model Data (POJO/Entity)
+│   │   │   │   ├── dataclass/                 # Model Data (POJO/Entity)
 │   │   │   │   │   ├── ChatMessage.kt
 │   │   │   │   │   ├── Katalog.kt
 │   │   │   │   │   ├── Post.kt
 │   │   │   │   │   └── User.kt
-│   │   │   │   ├── Fragment/                  # Fragment UI Halaman
+│   │   │   │   ├── fragment/                  # Fragment UI Halaman
 │   │   │   │   │   ├── ChatFragment.kt
 │   │   │   │   │   ├── Home_Admin_Fragment.kt
 │   │   │   │   │   ├── Home_Fragment.kt
 │   │   │   │   │   ├── Katalog_Fragment.kt
 │   │   │   │   │   └── Profile_Fragment.kt
-│   │   │   │   ├── Helper/                    # Database & Utilities (SQLite)
+│   │   │   │   ├── helper/                    # Database & Utilities (SQLite)
 │   │   │   │   │   └── DatabaseHelper.kt
-│   │   │   │   ├── LoginRegis/                # Fitur Autentikasi
+│   │   │   │   ├── loginregis/                # Fitur Autentikasi
 │   │   │   │   │   ├── GantiPasswordActivity.kt
 │   │   │   │   │   ├── LoginActivity.kt
 │   │   │   │   │   └── RegistrasiActivity.kt
@@ -71,3 +71,6 @@ DapurIbuProject
 ├── build.gradle.kts                           # Project-level settings
 └── settings.gradle.kts
 ```
+
+### Foto Dokumentasi
+Login & Registrasi
