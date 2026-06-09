@@ -6,7 +6,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.dapuribuproject.loginregis.LoginActivity
+import com.example.dapuribuproject.LoginRegis.LoginActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,7 +49,7 @@ class AuthTest {
     @Test
     fun testLoginFlowSuccess() {
         onView(withId(R.id.etUsername)).perform(clearText(), typeText("wisnu"), closeSoftKeyboard())
-        onView(withId(R.id.etPassword)).perform(clearText(), typeText("wisnu123"), closeSoftKeyboard())
+        onView(withId(R.id.etPassword)).perform(clearText(), typeText("wisnu1234"), closeSoftKeyboard())
 
         onView(withId(R.id.btnSimpan)).perform(click())
 

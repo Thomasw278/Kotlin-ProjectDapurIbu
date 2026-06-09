@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.dapuribuproject.fragment.Home_Fragment
-import com.example.dapuribuproject.fragment.Profile_Fragment
-import com.example.dapuribuproject.fragment.Katalog_Fragment
-import com.example.dapuribuproject.fragment.ChatFragment
-import com.example.dapuribuproject.fragment.Home_Admin_Fragment
+import com.example.dapuribuproject.Fragment.Home_Fragment
+import com.example.dapuribuproject.Fragment.Profile_Fragment
+import com.example.dapuribuproject.Fragment.Katalog_Fragment
+import com.example.dapuribuproject.Fragment.ChatFragment
+import com.example.dapuribuproject.Fragment.Home_Admin_Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 

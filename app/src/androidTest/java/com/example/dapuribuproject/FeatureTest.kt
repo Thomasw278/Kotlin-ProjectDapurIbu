@@ -7,7 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.dapuribuproject.loginregis.LoginActivity
+import com.example.dapuribuproject.LoginRegis.LoginActivity
 import org.hamcrest.Matchers.containsString
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +22,7 @@ class FeatureTest {
     @Test
     fun testSearchCatalog() {
         onView(withId(R.id.etUsername)).perform(typeText("wisnu"), closeSoftKeyboard())
-        onView(withId(R.id.etPassword)).perform(typeText("wisnu123"), closeSoftKeyboard())
+        onView(withId(R.id.etPassword)).perform(typeText("wisnu1234"), closeSoftKeyboard())
         onView(withId(R.id.btnSimpan)).perform(click())
 
         onView(withId(R.id.etSearch)).perform(typeText("Beef"), pressImeActionButton())
@@ -33,7 +33,7 @@ class FeatureTest {
     @Test
     fun testRoleAccessAsUser() {
         onView(withId(R.id.etUsername)).perform(typeText("wisnu"), closeSoftKeyboard())
-        onView(withId(R.id.etPassword)).perform(typeText("wisnu123"), closeSoftKeyboard())
+        onView(withId(R.id.etPassword)).perform(typeText("wisnu1234"), closeSoftKeyboard())
         onView(withId(R.id.btnSimpan)).perform(click())
 
         onView(withText(containsString("Menu Populer"))).check(matches(isDisplayed()))

@@ -90,7 +90,6 @@ class AddKatalogActivity : AppCompatActivity() {
             val uri: Uri? = data?.data
             uri?.let {
                 try {
-                    // Memberikan izin akses permanen ke URI ini
                     val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION
                     contentResolver.takePersistableUriPermission(it, takeFlags)
 

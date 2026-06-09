@@ -1,4 +1,4 @@
-package com.example.dapuribuproject.fragment
+package com.example.dapuribuproject.Fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,11 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import com.example.dapuribuproject.loginregis.GantiPasswordActivity
+import com.example.dapuribuproject.LoginRegis.GantiPasswordActivity
 import com.example.dapuribuproject.Helper.DatabaseHelper
-import com.example.dapuribuproject.loginregis.LoginActivity
+import com.example.dapuribuproject.LoginRegis.LoginActivity
 import com.example.dapuribuproject.R
-import com.example.dapuribuproject.loginregis.RegistrasiActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

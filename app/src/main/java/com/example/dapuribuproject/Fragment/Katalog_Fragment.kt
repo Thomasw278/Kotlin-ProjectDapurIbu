@@ -1,4 +1,4 @@
-package com.example.dapuribuproject.fragment
+package com.example.dapuribuproject.Fragment
 
 import android.content.Intent
 import android.os.Bundle

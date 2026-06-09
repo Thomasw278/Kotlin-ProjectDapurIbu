@@ -1,4 +1,4 @@
-package com.example.dapuribuproject.loginregis
+package com.example.dapuribuproject.LoginRegis
 
 import android.content.Intent
 import android.os.Bundle

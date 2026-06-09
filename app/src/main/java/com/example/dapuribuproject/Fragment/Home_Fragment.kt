@@ -1,4 +1,4 @@
-package com.example.dapuribuproject.fragment
+package com.example.dapuribuproject.Fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -95,7 +95,6 @@ class Home_Fragment : Fragment() {
                     if (response.isSuccessful) {
                         val meals = response.body()?.meals
                         val listData = meals?.take(20) ?: emptyList()
-                        // Tambahkan log untuk debugging data
                         Log.d("DEBUG_API", "Jumlah data yang berhasil diambil:${listData.size}")
                         meals?.forEach { makan ->
                             dbHelper.insertData_Katalog(makan.name ?: "", makan.category ?: "", makan.instructions ?: "", makan.thumbnail ?: ""
@@ -119,7 +118,6 @@ class Home_Fragment : Fragment() {
         val listFavorit = dbHelper.getFavoritByUser(username)
 
         val listData = listKatalog?.take(20) ?: emptyList()
-        // Tambahkan log untuk debugging data
         Log.d("DEBUG_API", "Jumlah data yang berhasil diambil:${listData.size}")
         
         updateContainers(listKatalog, listFavorit)

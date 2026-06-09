@@ -1,4 +1,4 @@
-package com.example.dapuribuproject.fragment
+package com.example.dapuribuproject.Fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -66,8 +66,7 @@ class ChatFragment : Fragment() {
     private fun setupAdminInbox(view: View) {
         val container = view.findViewById<LinearLayout>(R.id.rvUserChatList)
         container?.removeAllViews()
-        
-        // Gunakan Coroutine untuk ambil daftar user agar tidak lag
+
         lifecycleScope.launch(Dispatchers.IO) {
             val listCustomer = dbHelper.getChatUsersForAdmin()
             
