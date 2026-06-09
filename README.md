@@ -1,10 +1,10 @@
 # Kotlin-ProjectDapurIbu
 
 <p align="center">
-  <img src="app/src/main/res/drawable/dapuribu.png" width="200px" alt="Dapur Ibu Logo">
+  <img src="app/src/main/res/drawable/dapuribu.png" width="350px" alt="Dapur Ibu Logo">
 </p>
 
-### Nama Anggota
+### Author Name
 ```bash
 71230975 - Thomas Aquinas Ryan Wisnu Adi
 ```
