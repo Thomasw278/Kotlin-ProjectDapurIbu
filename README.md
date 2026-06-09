@@ -55,6 +55,7 @@ DapurIbuProject
 │   │   │   │   └── PostUtil.kt                # Utility class
 │   │   │   └── res/
 │   │   │       ├── drawable/                  # Aset Gambar & Icon
+│   │   │       ├── dokumentasi/               # Foto Dokumentasi
 │   │   │       ├── layout/                    # Desain UI (XML)
 │   │   │       ├── values/                    # Strings, Colors, Styles
 │   │   │       └── xml/                       # Konfigurasi XML lainnya
@@ -73,4 +74,10 @@ DapurIbuProject
 ```
 
 ### Foto Dokumentasi
-Login & Registrasi
+Login & Registrasi & Ganti Password
+
+<p align="center">
+  <img src="app/src/main/res/dokumentasi/login.png" width="350px" alt="Login">
+  <img src="app/src/main/res/dokumentasi/regis.png" width="350px" alt="Registrasi">
+  <img src="app/src/main/res/dokumentasi/gantipass.png" width="350px" alt="Ganti Password">
+</p>
